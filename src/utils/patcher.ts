@@ -85,9 +85,9 @@ export default class Patcher {
   private trackChangeHandler = (data: any) => {
     if (!data) return;
 
-    if (this.lastData?.track?.uri !== data?.track?.uri) {
+    if (this.lastData?.item?.uri !== data?.item?.uri) {
       console.log(data);
-      this.onTrackChanged.trigger(data?.track?.uri || '');
+      this.onTrackChanged.trigger(data?.item?.uri || '');
     }
 
     this.lastData = data;
