@@ -77,18 +77,17 @@ export default class Patcher {
   }
 
   private subscribeToPlayerEvents() {
-    Spicetify.Platform.PlayerAPI._cosmos.sub(
-      'sp://player/v2/main',
-      this.trackChangeHandler,
-    );
+    Spicetify.Player.addEventListener("songchange", (event) => {
+      this.trackChangeHandler(event.data)
+    });
   }
 
   private trackChangeHandler = (data: any) => {
     if (!data) return;
 
-    if (this.lastData?.track?.uri !== data?.track?.uri) {
+    if (this.lastData?.item?.uri !== data?.item?.uri) {
       console.log(data);
-      this.onTrackChanged.trigger(data?.track?.uri || '');
+      this.onTrackChanged.trigger(data?.item?.uri || '');
     }
 
     this.lastData = data;
