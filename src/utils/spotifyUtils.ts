@@ -93,7 +93,7 @@ export class SpotifyUtils {
 
     this.loadedInterval = setInterval(() => {
       console.log(
-        `check loaded: ${getCurrentTrackUri()}===${trackUri}   ${
+        `Check loaded: ${getCurrentTrackUri()}===${trackUri}   ${
           Spicetify.Platform.PlayerAPI._state?.item?.name
         }  ${!Spicetify.Platform.PlayerAPI._state.isBuffering}`,
       );

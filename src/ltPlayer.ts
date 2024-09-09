@@ -46,7 +46,7 @@ export default class LTPlayer {
       this.resumeTrackIfAdPlaying();
     }, AD_CHECK_INTERVAL);
 
-    this.volumeChangeEnabled = !!ogPlayerAPI.setVolume;
+    // this.volumeChangeEnabled = !!ogPlayerAPI.setVolume;
 
     // For testing
     (<any>Spicetify).OGFunctions = ogPlayerAPI;
@@ -146,7 +146,6 @@ export default class LTPlayer {
 
     console.log(`Changed track to ${trackUri}`);
     this.currentLoadingTrack = trackUri;
-    console.trace();
 
     if (this.client.connected) {
       if (isListenableTrackType(getTrackType(trackUri))) {

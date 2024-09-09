@@ -7,7 +7,7 @@ export class AddToQueueCommand implements Command {
     private items: Spicetify.ContextTrack[],
   ) {}
 
-  execute(ogAddToQueue: Function) {
+  async execute(ogAddToQueue: Function) {
     //ogAddToQueue(this.items);
     this.ltPlayer.addToQueue(this.items);
   }

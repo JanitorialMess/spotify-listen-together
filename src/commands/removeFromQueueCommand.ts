@@ -7,7 +7,7 @@ export class RemoveFromQueueCommand implements Command {
     private items: Spicetify.ContextTrack[],
   ) {}
 
-  execute(ogRemoveFromQueue: Function) {
+  async execute(ogRemoveFromQueue: Function) {
     //ogRemoveFromQueue(this.items);
     this.ltPlayer.removeFromQueue(this.items);
   }

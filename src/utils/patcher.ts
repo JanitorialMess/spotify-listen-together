@@ -68,27 +68,24 @@ export default class Patcher {
         Spicetify.Platform.PlayerAPI._events._emitter,
       );
 
-    if (Spicetify.Platform.PlayerAPI._volume) {
-      ogPlayerAPI.setVolume =
-        Spicetify.Platform.PlayerAPI._volume.setVolume.bind(
-          Spicetify.Platform.PlayerAPI._volume,
-        );
+    if (Spicetify.Platform.PlaybackAPI.setVolume) {
+      ogPlayerAPI.setVolume = (volume: number) => {
+        Spicetify.Platform.PlaybackAPI.setVolume(volume);
+      };
     }
   }
 
   private subscribeToPlayerEvents() {
-    Spicetify.Platform.PlayerAPI._cosmos.sub(
-      'sp://player/v2/main',
-      this.trackChangeHandler,
-    );
+    Spicetify.Player.addEventListener('songchange', (event) => {
+      this.trackChangeHandler(event!.data);
+    });
   }
 
   private trackChangeHandler = (data: any) => {
     if (!data) return;
 
-    if (this.lastData?.track?.uri !== data?.track?.uri) {
-      console.log(data);
-      this.onTrackChanged.trigger(data?.track?.uri || '');
+    if (this.lastData?.item?.uri !== data?.item?.uri) {
+      this.onTrackChanged.trigger(data?.item?.uri || '');
     }
 
     this.lastData = data;
@@ -117,7 +114,7 @@ export default class Patcher {
     }
 
     if (ogPlayerAPI.setVolume) {
-      Spicetify.Platform.PlayerAPI._volume.setVolume = this.setVolumeHandler;
+      Spicetify.Platform.PlayerAPI.setVolume = this.setVolumeHandler;
     }
 
     Spicetify.Platform.History.listen(this.historyChangeHandler);
@@ -146,7 +143,7 @@ export default class Patcher {
     }
 
     if (ogPlayerAPI.setVolume) {
-      Spicetify.Platform.PlayerAPI._volume.setVolume = ogPlayerAPI.setVolume;
+      Spicetify.Platform.PlaybackAPI.setVolume = ogPlayerAPI.setVolume;
     }
   }
 
@@ -242,13 +239,13 @@ export default class Patcher {
     }
   };
 
-  private restrictAccess(ogFunc: any, command: Command) {
+  private async restrictAccess(ogFunc: any, command: Command) {
     if (!this.ltPlayer.client.connected && !this.ltPlayer.client.connecting) {
       console.log('Not connected');
       ogFunc();
     } else if (command.hasPermission()) {
       console.log('Has permission');
-      command.execute(ogFunc);
+      await command.execute(ogFunc);
     } else {
       console.log('No permission');
       command.specialAction();

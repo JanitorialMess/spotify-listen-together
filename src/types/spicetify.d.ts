@@ -802,7 +802,7 @@ declare namespace Spicetify {
     // EnhanceAPI: any;
     // SEOExperiments: any;
     // SingAlongAPI: any;
-    // PlaybackAPI: any;
+    PlaybackAPI: any;
     // UBILogger: any;
     // CollectionPlatformAPI: any;
     // LocalStorageAPI: any;

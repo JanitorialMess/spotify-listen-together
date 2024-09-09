@@ -4,8 +4,8 @@ import LTPlayer from '../ltPlayer';
 export class PauseCommand implements Command {
   constructor(private ltPlayer: LTPlayer) {}
 
-  execute(ogPause: Function) {
-    ogPause();
+  async execute(ogPause: Function) {
+    await ogPause();
     this.ltPlayer.requestUpdateSong(true, Spicetify.Player.getProgress());
   }
 

@@ -4,7 +4,7 @@ import LTPlayer from '../ltPlayer';
 export class SkipToNextCommand implements Command {
   constructor(private ltPlayer: LTPlayer, private e: any) {}
 
-  execute(ogSkipToNext: Function) {
+  async execute(ogSkipToNext: Function) {
     ogSkipToNext(this.e);
   }
 

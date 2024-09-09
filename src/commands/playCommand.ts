@@ -10,7 +10,7 @@ export class PlayCommand implements Command {
     private options: any,
   ) {}
 
-  execute(ogPlay: Function) {
+  async execute(ogPlay: Function) {
     this.ltPlayer.muteBeforePlay();
     ogPlay(this.uri, this.context, this.options);
   }

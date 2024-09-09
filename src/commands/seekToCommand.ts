@@ -4,8 +4,8 @@ import LTPlayer from '../ltPlayer';
 export class SeekToCommand implements Command {
   constructor(private ltPlayer: LTPlayer, private milliseconds: number) {}
 
-  execute(ogSeekTo: Function) {
-    ogSeekTo(this.milliseconds);
+  async execute(ogSeekTo: Function) {
+    await ogSeekTo(this.milliseconds);
     this.ltPlayer.requestUpdateSong(
       !Spicetify.Player.isPlaying(),
       this.milliseconds,

@@ -4,7 +4,7 @@ import LTPlayer from '../ltPlayer';
 export class SkipToPreviousCommand implements Command {
   constructor(private ltPlayer: LTPlayer, private e: any) {}
 
-  execute(ogSkipToPrevious: Function) {
+  async execute(ogSkipToPrevious: Function) {
     if (Spicetify.Player.getProgress() <= 3000) {
       ogSkipToPrevious(this.e);
     } else {

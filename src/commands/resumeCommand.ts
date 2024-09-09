@@ -4,8 +4,8 @@ import LTPlayer from '../ltPlayer';
 export class ResumeCommand implements Command {
   constructor(private ltPlayer: LTPlayer) {}
 
-  execute(ogResume: Function) {
-    ogResume();
+  async execute(ogResume: Function) {
+    await ogResume();
     this.ltPlayer.requestUpdateSong(false, Spicetify.Player.getProgress());
   }
 

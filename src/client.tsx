@@ -82,8 +82,21 @@ export default class Client {
       }
     });
 
-    this.socket.onAny((ev: string, ...args: any) => {
-      console.log(`Receiving ${ev}: ${args}`);
+    this.socket.onAny((ev: string, ...args: any[]) => {
+      const formattedArgs = args.map((arg) => {
+        if (typeof arg === 'object' && arg !== null) {
+          return JSON.stringify(arg, null, 2);
+        } else if (typeof arg === 'string') {
+          return `"${arg}"`;
+        } else if (typeof arg === 'function') {
+          return arg.toString();
+        } else {
+          return String(arg);
+        }
+      });
+
+      const argsString = formattedArgs.join(', ');
+      console.log(`Receiving event "${ev}" with args: ${argsString}`);
     });
 
     this.socket.on('changeSong', (trackUri: string) => {

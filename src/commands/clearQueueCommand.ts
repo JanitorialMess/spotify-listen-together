@@ -4,7 +4,7 @@ import LTPlayer from '../ltPlayer';
 export class ClearQueueCommand implements Command {
   constructor(private ltPlayer: LTPlayer) {}
 
-  execute(ogClearQueue: Function) {
+  async execute(ogClearQueue: Function) {
     //ogClearQueue();
     this.ltPlayer.clearQueue();
   }
